@@ -1,0 +1,150 @@
+******
+Spark
+******
+
+[yy2085@F4Linux1 src]$ ./build.script 
+Computing......
+May take 10 or more seconds......
+1. 5-fold cross validation for C:
+Average accuracy for each parameter(C):
+0.7817817910035502
+0.7817817910035502
+0.78378179100355
+
+Best Model Parameters:
+{
+	linearsvc_e9bb14dca6f3-aggregationDepth: 2,
+	linearsvc_e9bb14dca6f3-featuresCol: features,
+	linearsvc_e9bb14dca6f3-fitIntercept: true,
+	linearsvc_e9bb14dca6f3-labelCol: label,
+	linearsvc_e9bb14dca6f3-maxIter: 100,
+	linearsvc_e9bb14dca6f3-predictionCol: prediction,
+	linearsvc_e9bb14dca6f3-rawPredictionCol: rawPrediction,
+	linearsvc_e9bb14dca6f3-regParam: 0.1,
+	linearsvc_e9bb14dca6f3-standardization: true,
+	linearsvc_e9bb14dca6f3-threshold: 0.0,
+	linearsvc_e9bb14dca6f3-tol: 1.0E-6
+}
+
+2. Test on the test set:
+accuracy = 0.775
+corrects  = 155.0
+Area under ROC = 0.7683172302737521
+Confusion matrix:
+92.0  16.0  
+29.0  63.0
+
+
+////////////////////////////////////////////
+*****
+* R
+*****
+
+Loading required package: e1071
+Type 'citation("pROC")' for a citation.
+
+Attaching package: ‘pROC’
+
+The following objects are masked from ‘package:stats’:
+
+    cov, smooth, var
+
+
+Call:
+svm(formula = Survived ~ ., data = traindata, kernel = "linear", 
+    type = "C-classification", tol = 1e-06, max_iter = 100, cost = 0.005, 
+    cross = 5, scale = TRUE)
+
+
+Parameters:
+   SVM-Type:  C-classification 
+ SVM-Kernel:  linear 
+       cost:  0.005 
+      gamma:  0.2 
+
+Number of Support Vectors:  383
+
+ ( 192 191 )
+
+
+Number of Classes:  2 
+
+Levels: 
+ 0 1
+
+5-fold cross-validation on training data:
+
+Total Accuracy: 74.70817 
+Single Accuracies:
+ 74.5098 68.93204 79.61165 75.72816 74.75728 
+
+
+
+
+Call:
+svm(formula = Survived ~ ., data = traindata, kernel = "linear", 
+    type = "C-classification", tol = 1e-06, max_iter = 100, cost = 0.05, 
+    cross = 5, scale = TRUE)
+
+
+Parameters:
+   SVM-Type:  C-classification 
+ SVM-Kernel:  linear 
+       cost:  0.05 
+      gamma:  0.2 
+
+Number of Support Vectors:  277
+
+ ( 139 138 )
+
+
+Number of Classes:  2 
+
+Levels: 
+ 0 1
+
+5-fold cross-validation on training data:
+
+Total Accuracy: 78.21012 
+Single Accuracies:
+ 76.47059 84.46602 74.75728 78.64078 76.69903 
+
+
+
+
+Call:
+svm(formula = Survived ~ ., data = traindata, kernel = "linear", 
+    type = "C-classification", tol = 1e-06, max_iter = 100, cost = 0.1, 
+    cross = 5, scale = TRUE)
+
+
+Parameters:
+   SVM-Type:  C-classification 
+ SVM-Kernel:  linear 
+       cost:  0.1 
+      gamma:  0.2 
+
+Number of Support Vectors:  268
+
+ ( 131 137 )
+
+
+Number of Classes:  2 
+
+Levels: 
+ 0 1
+
+5-fold cross-validation on training data:
+
+Total Accuracy: 78.21012 
+Single Accuracies:
+ 80.39216 84.46602 68.93204 81.5534 75.72816 
+
+
+[1] "Results:"
+Area under the curve: 0.7683
+[1] "Confusion Matrix:"
+     pre
+label  0  1
+    0 92 16
+    1 29 63

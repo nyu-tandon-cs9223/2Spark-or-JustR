@@ -1,0 +1,45 @@
+Last login: Fri Dec  8 11:38:19 2017 from 207.237.28.44
+[yy2147@F4Linux1 ~]$ Rscript rbuild.r
+Loading required package: methods
+Loading required package: grid
+Loading required package: mvtnorm
+Loading required package: modeltools
+Loading required package: stats4
+Loading required package: strucchange
+Loading required package: zoo
+
+Attaching package: azooa
+
+The following objects are masked from apackage:basea:
+
+    as.Date, as.Date.numeric
+
+Loading required package: sandwich
+randomForest 4.6-12
+Type rfNews() to see new features/changes/bug fixes.
+Loading required package: gplots
+
+Attaching package: agplotsa
+
+The following object is masked from apackage:statsa:
+
+    lowess
+
+[1] "Confusion Matrix:"
+   rf.p
+      0   1
+  0 102   6
+  1  32  60
+[1] "Accuracy:"
+[1] 0.825
+[1] "AUC:"
+[1] 0.8786232
+[yy2147@F4Linux1 ~]$ chmod 777 build.script
+[yy2147@F4Linux1 ~]$ ./build.script
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+Confusion Matrix:
+101.0  7.0   
+32.0   60.0  
+Accuracy:0.805
+AUC:0.7936795491143317
+[yy2147@F4Linux1 ~]$ 

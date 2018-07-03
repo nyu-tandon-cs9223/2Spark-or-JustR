@@ -1,0 +1,45 @@
+//	Spark Project SVM
+//	Runchen Hu
+//	rh2619
+
+import org.apache.spark.mllib.regression.LabeledPoint
+import org.apache.spark.mllib.classification.SVMWithSGD
+import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
+
+
+val spark = org.apache.spark.sql.SparkSession.builder.master("local").appName("Reader").getOrCreate;
+val df = spark.read.format("csv").option("header","true").load("titanic-train.csv")
+val data = df.select($"Survived",$"Pclass",$"Sex",$"Age",$"Fare")
+val newdata = data.withColumn("Sex", when(col("Sex") === "male", "1").otherwise(col("Sex")))
+val finaldata = newdata.withColumn("Sex", when(col("Sex") === "female", "0").otherwise(col("Sex")))
+val data2 = finaldata.selectExpr("cast(Survived as double) Survived", "cast(Pclass as int) Pclass", "cast(Sex as int) Sex", "cast(Age as int) Age", "cast(Fare as float) Fare")
+val data3 = data2.na.drop
+
+
+val splits = data3.randomSplit(Array(0.8, 0.2), seed = 11L)
+val training = splits(0).cache()
+val test = splits(1)
+
+
+val training_rows: org.apache.spark.rdd.RDD[org.apache.spark.sql.Row] = training.rdd
+val labeled_training = training_rows.map( a => LabeledPoint(a.getDouble(0),org.apache.spark.mllib.linalg.Vectors.dense(a.getInt(1),a.getInt(2),a.getInt(3),a.getFloat(4))))
+
+val test_rows: org.apache.spark.rdd.RDD[org.apache.spark.sql.Row] = test.rdd
+
+val labeled_test = test_rows.map( a => LabeledPoint(a.getDouble(0),org.apache.spark.mllib.linalg.Vectors.dense(a.getInt(1),a.getInt(2),a.getInt(3),a.getFloat(4))))
+
+
+val numIterations = 100
+val model = SVMWithSGD.train(labeled_training, numIterations)
+
+
+model.clearThreshold()
+val scoreAndLabels = labeled_test.map { point =>
+      val score = model.predict(point.features)
+      (score, point.label)
+    }
+val metrics = new BinaryClassificationMetrics(scoreAndLabels)
+
+
+val auROC = metrics.areaUnderROC()
+println("Area under ROC = " + auROC)
