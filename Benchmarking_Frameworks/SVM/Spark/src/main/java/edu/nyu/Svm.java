@@ -59,7 +59,6 @@ public class Svm {
             vector[3] = Double.valueOf(params[5]);
             return new LabeledPoint(label, new DenseVector(vector));
         });
-        
 
         // Split initial RDD into two... [60% training data, 40% testing data].
         //JavaRDD<LabeledPoint> training = data.sample(false, 0.6, 11L);
@@ -71,13 +70,22 @@ public class Svm {
         int numIterations = 170;
         SVMModel model = SVMWithSGD.train(training.rdd(), numIterations);
 
-        // Clear the default threshold.
-        model.clearThreshold();
-
         // Compute raw scores on the test set.
         JavaRDD<Tuple2<Object, Object>> scoreAndLabels = test.map(p ->
                 new Tuple2<>(model.predict(p.features()), p.label()));
-        
+
+	MulticlassMetrics metrics_m = new MulticlassMetrics(scoreAndLabels.rdd());
+	double accuracy = metrics_m.accuracy();
+	System.out.println("Accuracy = " + accuracy);
+	System.out.println("Confusion Matrix =\n"+ metrics_m.confusionMatrix());
+	
+        // Clear the default threshold.
+        model.clearThreshold();
+
+	// Recalculate Raw Scores (cleared threshold)
+        scoreAndLabels = test.map(p ->
+                new Tuple2<>(model.predict(p.features()), p.label()));
+
         double min = Double.MAX_VALUE;
         double max = Double.MIN_VALUE;
         
@@ -97,11 +105,10 @@ public class Svm {
         }
         final double finalMin = min;
         final double finalMax = max;
-        System.out.println(min + " "+ max);
+//        System.out.println(min + " "+ max);
         
         double testErr = scoreAndLabels.filter(pl -> {
 	        	double norm = ((double) pl._1 - finalMin) / (finalMax - finalMin);
-//	        	System.out.println(norm);
         		if ((norm > 0.5 ? 1.0d : 0.0d) == (double) pl._2()) {
 	        		return false;
 	        	} else {
@@ -112,16 +119,9 @@ public class Svm {
         System.out.println("testErr = " + testErr);
         
         // Get evaluation metrics.
-        BinaryClassificationMetrics metrics =
-                new BinaryClassificationMetrics(JavaRDD.toRDD(scoreAndLabels));
+        BinaryClassificationMetrics metrics = new BinaryClassificationMetrics(JavaRDD.toRDD(scoreAndLabels));
         double auROC = metrics.areaUnderROC();
-        
-
-// 	MulticlassMetrics not working  
-//	MulticlassMetrics metricsm = new MulticlassMetrics(JavaRDD.toRDD(scoreAndLabels));
-//	System.out.println("Confusion Matrix: \n" + metricsm.confusionMatrix());      
-
-
+           
         System.out.println("Area under ROC = " + auROC);
         
         jsc.stop();
