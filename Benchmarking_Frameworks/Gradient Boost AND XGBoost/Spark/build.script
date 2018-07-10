@@ -1,0 +1,1 @@
+usr/local/spark/bin/spark-submit --class GBTTitanicClassification --master local[2] TitanicGBT/target/TitanicGBT-1.0-SNAPSHOT.jar 

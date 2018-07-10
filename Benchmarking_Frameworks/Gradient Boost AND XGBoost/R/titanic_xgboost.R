@@ -82,6 +82,8 @@ xgb_fpr<-unlist(xgb_slot_fp)/unlist(slot(xgb_auc,"n.neg"))
 xgb_tpr<-unlist(xgb_slot_tp)/unlist(slot(xgb_auc, "n.pos"))
 xgb_pref_AUC = performance(xgb_auc, "auc")
 xgb_AUC = xgb_pref_AUC@y.values[[1]]
+"AUC"
+xgb_AUC
 plot(xgb_prf, main = "ROC plot", xlab = "FPR", ylab = "TPR")
 #this need extra library and package installment
 result <- confusionMatrix(as.numeric(unlist(predict_xgboost_test)), as.numeric(test$Survived))

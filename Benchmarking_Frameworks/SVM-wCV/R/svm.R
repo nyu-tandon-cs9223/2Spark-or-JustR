@@ -1,6 +1,7 @@
 print("################### R #################")
 require("e1071")
 library("pROC")
+set.seed(43)
 traindata <- read.csv("train.csv", header = TRUE)
 testdata <- read.csv("test.csv", header = TRUE)
 

@@ -1,0 +1,1 @@
+/usr/local/spark/bin/spark-submit --master local[*] --class RidgeRegression Ridge/target/spark-java-ml-ridge-1.0-Ridge.jar

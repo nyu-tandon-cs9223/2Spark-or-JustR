@@ -1,0 +1,7 @@
+Confusion matrix: 
+108.0  16.0  
+23.0   54.0  
+Accuracy = 0.8059701492537313
+True positive rate = 0.870968
+Area under precision-recall curve = 0.793577566711895
+Area under ROC = 0.7861332216170925

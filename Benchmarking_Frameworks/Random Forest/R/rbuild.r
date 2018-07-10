@@ -1,6 +1,7 @@
 library(party)
 library(randomForest)
 library(ROCR)
+set.seed(43)
 trdata <- read.csv("trdata.csv",header = TRUE)
 tstdata <- read.csv("tstdata.csv",header = TRUE)
 trdata$Survived <- as.factor(trdata$Survived)

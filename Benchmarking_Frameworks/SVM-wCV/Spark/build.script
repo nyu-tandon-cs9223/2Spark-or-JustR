@@ -1,0 +1,1 @@
+/usr/local/spark/bin/spark-submit --files "resources/log4j.properties" --conf spark.driver.extraJavaOptions='-Dlog4j.configuration=file:resources/log4j.properties' --class svm src/Project2.jar

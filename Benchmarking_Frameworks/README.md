@@ -19,7 +19,7 @@ The following instructions will help you execute the scripts. The instructions u
 * Note: Make sure you have a working installation of R on your machine/instance.
 
 
-### To run Spark models (from your shell):
+### To run compile and run models in Spark (from your shell):
 
 1. Move to the respective folder:
 
@@ -48,3 +48,13 @@ The following instructions will help you execute the scripts. The instructions u
 * Note: The directory structure of each java model should be maintained. Any changes should be reflected in pom.xml.
 
 * Make sure spark and scala have been added to the environment variables/$PATH.
+
+## To run models from jar files:
+
+1. Move to the respective folder:
+
+	 `cd 2Spark-or-JustR/Benchmarking_Frameworks/SVM/Spark/`
+
+2. Run the build script (every model with a Spark directory has one):
+
+	`./build.script`

@@ -59,6 +59,9 @@ gbm_fpr<-unlist(gbm_slot_fp)/unlist(slot(gbm_auc,"n.neg"))
 gbm_tpr<-unlist(gbm_slot_tp)/unlist(slot(gbm_auc, "n.pos"))
 gbm_pref_AUC = performance(gbm_auc, "auc")
 gbm_AUC = gbm_pref_AUC@y.values[[1]]
+"AUC"
+gbm_AUC
+
 plot(gbm_prf, main = "ROC plot", xlab = "FPR", ylab = "TPR")
 #this need extra library and package installment
 result <- confusionMatrix(as.numeric(unlist(predict_test)), as.numeric(test$Survived))

@@ -1,5 +1,6 @@
 library(e1071)
 library(ROCR)
+require(caret)
 
 #setwd('~/Spark_Project')
 #You can set your own directory.
@@ -51,3 +52,50 @@ legend("bottomright", legend = c("1 vs others", "2 vs others"), col = 2:3, lty =
 lines(x = c(0, 1), c(0, 1))
 cat("AUC", fill = T)
 aucs
+
+#sn = slotNames(pred)
+#sapply(sn, function(x) length(slot(pred, x)))
+
+#slot(pred,"fn")
+#pred
+
+#length(score)
+
+sc <- round(score)
+
+tn = 0
+tp = 0
+fn = 0
+fp = 0
+for (i in 1:length(sc)){
+#	print(sc[i])
+#	print(actual.Survived[i])
+	if(sc[i]==actual.Survived[i]){
+		if(sc[i]==0){
+			tp=tp+1
+		}
+		if(sc[i]==1){
+			tn=tn+1
+		}
+	}
+	if(sc[i]!=actual.Survived[i]){
+		if(sc[i]==0){
+			fp=fp+1
+		}
+		if(sc[i]==1){
+			fn=fn+1
+		}
+
+	}
+}
+"tn"
+tn
+
+"tp"
+tp
+
+"fn"
+fn
+
+"fp"
+fp

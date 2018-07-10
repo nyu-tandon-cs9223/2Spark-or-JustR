@@ -1,0 +1,2 @@
+/usr/local/spark/bin/spark-submit --class LogisticRegression3 spark-java-ml-1.0-SNAPSHOT.jar
+/usr/local/spark/bin/spark-submit --class LogisticRegression4 spark-java-ml-1.0-SNAPSHOT.jar

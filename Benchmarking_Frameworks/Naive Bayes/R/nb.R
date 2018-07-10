@@ -2,6 +2,7 @@ library(caret)
 library(e1071)
 library(pROC)
 require(ROCR)
+set.seed(43)
 titanic <- read.csv("./titanic-train.csv",header=T)
 head(titanic)
 titanic$Ticket <- NULL
@@ -26,6 +27,7 @@ prf <- performance(pr,"tpr","fpr")
 plot(prf)
 prf
 auc <- performance(pr,'auc')
+"AUC"
 auc
 auc_final <- auc@y.values[[1]]
 text(0.4,0.6,paste("NAIVE BAYES AUC=",auc_final))

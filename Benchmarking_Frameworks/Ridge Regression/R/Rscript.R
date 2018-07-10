@@ -1,6 +1,6 @@
 library(glmnet)
 library(ROCR)
-
+set.seed(43)
 trainData<-read.csv("train.csv", header=FALSE,stringsAsFactors=FALSE)
 testData<-read.csv("test.csv", header=FALSE,stringsAsFactors=FALSE)
 
@@ -27,7 +27,7 @@ pred_ridge <- round(pred_ridge)
 confusion.matrix <- prop.table(table(pred_ridge, testData$V1))
 accuracy <- confusion.matrix[1,1] + confusion.matrix[2,2] 
 paste("Accuracy: ", accuracy)
-
+confusion.matrix
 
 ridge_pred_class <- prediction(pred_ridge,testData$V1)
 ridge_perf_rocr <- performance(ridge_pred_class, measure='tpr',x.measure='fpr')
